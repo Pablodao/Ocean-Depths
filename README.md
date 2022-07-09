@@ -23,7 +23,7 @@ Add here a simple description of your game.
 # Backlog Functionalities
 
 - Special guest appears and double your score multiplier a certain amount of time 
-- Better Oxigen bar 
+- Better Oxigen bar
 
 # Proyect Structure
 
