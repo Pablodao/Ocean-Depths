@@ -5,23 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ocean Depths</title>
+    <link rel="stylesheet" href="./styles/style.css">
   </head>
   <body>
     <!-- START GAME SCREEN -->
     <div id="start-screen">
       <img src="./images/start-screen.gif" alt="ocean with a boat" />
-      <button id="start-btn"><!--start button--></button>
+      <button id="start-btn">GO DIVE</button>
     </div>
 
     <!--GAME SCREEN -->
-
-    <canvas id="my-canvas" width="500" height="400"></canvas>
+    <div id="game-screen" >
+        <canvas id="my-canvas" width="500" height="400"></canvas>
     <button id="pause-btn"><!-- pause button --></button>
+    </div>
+    
 
     <!--GAME OVER SCREEN -->
     <div id="game-over-screen">
       <img src="./images/game-over-screen.jpeg" alt="sunset in the ocean" />
-      <button id="restart-btn"><!--restart button--></button>
+      <button id="restart-btn">PLAY AGAIN</button>
     </div>
 
     <script src="./javascript/main.js"></script>
