@@ -11,7 +11,7 @@ class Oxigen{
     this.w = 50; // Width
     this.h = 50; // height
 
-    this.speed = 2.5;
+    this.speed = 4;
 
 
     }

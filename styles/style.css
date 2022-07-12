@@ -38,6 +38,7 @@ body {
   width: 100vw;
 }
 
+
 #restart-btn {
   height: 100px;
   width: 200px;
@@ -48,8 +49,8 @@ body {
   border-radius: 7px;
   position: absolute;
   top: 45%;
-}
 
+}
 
 #my-canvas {
   height: 100vh;
@@ -59,4 +60,55 @@ body {
 #game-over-screen,
 #game-screen {
   display: none;
+}
+
+#info-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 2%;
+}
+
+#pause-btn {
+  height: 30px;
+  margin: 20px;
+  font-size: 16px;
+  color: black;
+  background-color: lightyellow;
+  border: none;
+  border-radius: 7px;
+  order: 1;
+}
+
+#score {
+  height: 50px;
+  width: 200px;
+  padding: 10px;
+  margin: 0;
+  font-size: 32px;
+  color: black;
+  background-color: lightyellow;
+  border: none;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  order: 0;
+}
+
+#oxigen {
+  height: 50px;
+  width: 200px;
+  padding: 10px;
+  margin: 0;
+  font-size: 28px;
+  color: black;
+  background-color: lightyellow;
+  border: none;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  order: 2;
 }

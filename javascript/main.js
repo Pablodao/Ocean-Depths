@@ -36,7 +36,15 @@ const startGame = () => {
   game.gameLoop();
 };
 
-const pauseGame = () => {};
+const pauseGame = () => {
+
+    if (game.isGamePaused === false) {
+        game.isGamePaused = true
+      } else {
+        game.isGamePaused = false
+        game.gameLoop()
+      }
+};
 
 // * ADD EVENT LISTENERS
 
