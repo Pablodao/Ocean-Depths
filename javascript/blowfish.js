@@ -8,8 +8,8 @@ class Blowfish{
 
     this.x = canvas.width; // X-Axix
     this.y = yParam + 100; // Y-Axix
-    this.w = 100; // Width
-    this.h = 100; // height
+    this.w = 130; // Width
+    this.h = 130; // height
 
     this.speed = 3;
 

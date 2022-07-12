@@ -8,8 +8,8 @@ class Oxigen{
 
     this.x = canvas.width; // X-Axix
     this.y = yParam + 100; // Y-Axix
-    this.w = 100; // Width
-    this.h = 100; // height
+    this.w = 50; // Width
+    this.h = 50; // height
 
     this.speed = 2.5;
 
