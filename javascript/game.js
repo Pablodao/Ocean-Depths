@@ -92,7 +92,7 @@ class Game {
         eachOxigen.y < this.player.y + this.player.h / 2 &&
         eachOxigen.h / 2 + eachOxigen.y > this.player.y
       ) {
-        this.oxigen += 30;
+        this.oxigen += 15;
         oxigenDOM.innerText = this.oxigen;
         this.oxigenArr.shift(eachOxigen);
 
