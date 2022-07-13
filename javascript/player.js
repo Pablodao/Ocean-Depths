@@ -9,7 +9,12 @@ class Player {
     this.w = 175; // Width
     this.h = 150; // height
 
-    this.speed = 20;
+    this.speed = 10;
+
+    this.keyPressed = {
+      upKey: false,
+      downKey: false,
+    };
   }
 
   // Player methods
@@ -19,16 +24,14 @@ class Player {
   };
 
   playerUpMovement = () => {
-    if (this.y >= 100) {
-      this.y = this.y - this.speed;
+    if (this.y >= 100 && this.keyPressed.upKey === true ) {
+      this.y -= this.speed;
     }
   };
 
   playerDownMovement = () => {
-
-    if (this.y <= (canvas.height - 190)){
-    this.y = this.y + this.speed;
+    if (this.y <= canvas.height - 190 && this.keyPressed.downKey === true) {
+      this.y += this.speed;
+    }
   };
-}
-
 }

@@ -59,7 +59,7 @@ class Game {
         eachBlowfish.y < this.player.y + this.player.h / 2 &&
         eachBlowfish.h / 2 + eachBlowfish.y > this.player.y
       ) {
-        this.oxigen -= 20;
+        this.oxigen -= 15;
         oxigenDOM.innerText = this.oxigen;
         this.blowFishArr.shift(eachBlowfish);
 
@@ -78,7 +78,7 @@ class Game {
   spawnOxigen = () => {
     if (
       this.oxigenArr.length === 0 ||
-      this.oxigenArr[this.oxigenArr.length - 1].x < canvas.width * 0.4
+      this.oxigenArr[this.oxigenArr.length - 1].x < canvas.width * 0.5
     ) {
       let randomPositionY = Math.random() * (canvas.height - 300);
       let newOxigen = new Oxigen(randomPositionY);
@@ -98,7 +98,7 @@ class Game {
         eachOxigen.y < this.player.y + this.player.h / 2 &&
         eachOxigen.h / 2 + eachOxigen.y > this.player.y
       ) {
-        this.oxigen += 15;
+        this.oxigen += 10;
         oxigenDOM.innerText = this.oxigen;
         this.oxigenArr.shift(eachOxigen);
 
@@ -108,8 +108,8 @@ class Game {
   };
 
   updateOxigen = () => {
-    if (this.framesCounter % 120 === 0 && this.framesCounter !== 0) {
-      this.oxigen -= 10;
+    if (this.framesCounter % 90 === 0 && this.framesCounter !== 0) {
+      this.oxigen -= 5;
 
       oxigenDOM.innerText = this.oxigen;
     }
@@ -117,7 +117,7 @@ class Game {
 
   updateScore = () => {
     if (this.framesCounter % 240 === 0 && this.framesCounter !== 0) {
-      this.score += 50;
+      this.score += 75;
 
       scoreDOM.innerText = this.score;
     } else if ( this.framesCounter === 0 ){
@@ -151,6 +151,10 @@ class Game {
     });
     this.playerBlowfishCollision();
     this.playerOxigenCollision();
+
+    this.player.playerUpMovement()
+    this.player.playerDownMovement()
+
 
     //* Draw elements
     ctx.drawImage(this.bg, 0, 0, canvas.width, canvas.height);

@@ -37,13 +37,12 @@ const startGame = () => {
 };
 
 const pauseGame = () => {
-
-    if (game.isGamePaused === false) {
-        game.isGamePaused = true
-      } else {
-        game.isGamePaused = false
-        game.gameLoop()
-      }
+  if (game.isGamePaused === false) {
+    game.isGamePaused = true;
+  } else {
+    game.isGamePaused = false;
+    game.gameLoop();
+  }
 };
 
 // * ADD EVENT LISTENERS
@@ -53,15 +52,27 @@ restartBtn.addEventListener("click", startGame);
 pauseBtn.addEventListener("click", pauseGame);
 
 window.addEventListener("keydown", (event) => {
-  if (event.code === "KeyW") {
-    console.log("w key pressed");
-    game.player.playerUpMovement();
+  if (event.code === "KeyW" || event.code === "ArrowUp") {
+    game.player.keyPressed.upKey = true;
   }
 });
 
 window.addEventListener("keydown", (event) => {
-  if (event.code === "KeyS") {
+  if (event.code === "KeyS" || event.code === "ArrowDown") {
     console.log("s key pressed");
-    game.player.playerDownMovement();
+    game.player.keyPressed.downKey = true;
+  }
+});
+
+window.addEventListener("keyup", (event) => {
+  if (event.code === "KeyW" || event.code === "ArrowUp") {
+    game.player.keyPressed.upKey = false;
+  }
+});
+
+window.addEventListener("keyup", (event) => {
+  if (event.code === "KeyS" || event.code === "ArrowDown") {
+    console.log("s key pressed");
+    game.player.keyPressed.downKey = false;
   }
 });
