@@ -11,10 +11,12 @@ class Game {
 
     this.blowFishArr = [];
     this.oxigenArr = [];
+    this.specialGuestArr = [];
 
-    this.score = 0;
+    this.score = 1;
     this.oxigen = 100;
 
+    this.bonusCounter = 0;
     this.framesCounter = 0;
 
     this.isGameOn = true;
@@ -23,8 +25,9 @@ class Game {
 
   // Game methods and functions
 
+  // Blowfish
+
   removeBlowfishFromArray = () => {
-    //console.log("blowFishArr:",this.blowFishArr.length)
     if (this.blowFishArr[0].x + this.blowFishArr[0].w < 0) {
       this.blowFishArr.shift();
     }
@@ -41,17 +44,9 @@ class Game {
     }
   };
 
-  deleteBlowfish = () => {
-    if (blowfishCollision === true) {
-      this.blowFishArr.shift();
-    }
-  };
-
   playerBlowfishCollision = () => {
     this.blowFishArr.forEach((eachBlowfish) => {
       // Check if each of the blowfish collision with player
-      // EachBlowfish
-      // This.player
 
       if (
         eachBlowfish.x < this.player.x + this.player.w * 0.8 &&
@@ -62,14 +57,13 @@ class Game {
         this.oxigen -= 15;
         oxigenDOM.innerText = this.oxigen;
         this.blowFishArr.shift(eachBlowfish);
-
-        //console.log("BLOWFISH COLLISION")
       }
     });
   };
 
+  // Oxygen Bottle
+
   removeOxigenFromArray = () => {
-    //console.log( "oxigenArr:",this.oxigenArr.length)
     if (this.oxigenArr[0].x + this.oxigenArr[0].w < 0) {
       this.oxigenArr.shift();
     }
@@ -88,7 +82,7 @@ class Game {
 
   playerOxigenCollision = () => {
     this.oxigenArr.forEach((eachOxigen) => {
-      // Check if each of the blowfish collision with player
+      // Check if each of the oxigen-bottle collision with player
       // EachOxigen
       // This.player
 
@@ -98,14 +92,59 @@ class Game {
         eachOxigen.y < this.player.y + this.player.h / 2 &&
         eachOxigen.h / 2 + eachOxigen.y > this.player.y
       ) {
-        this.oxigen += 10;
+        this.oxigen += 30;
         oxigenDOM.innerText = this.oxigen;
         this.oxigenArr.shift(eachOxigen);
 
-        //console.log(" OXIGEN COLLISION")
+        if (this.oxigen >= 100) {
+          this.oxigen = 100;
+          oxigenDOM.innerText = this.oxigen;
+        }
       }
     });
   };
+
+  // Special Guest
+
+  removeSpecialGuestFromArray = () => {
+    this.specialGuestArr.forEach((eachSpecialGuest) => {
+      if (eachSpecialGuest.x + eachSpecialGuest.w < 0) {
+        this.specialGuestArr.shift(eachSpecialGuest);
+      } else if (this.specialGuestArr[0].x + this.specialGuestArr[0].w < 0) {
+        this.specialGuestArr.shift(eachSpecialGuest);
+      }
+    });
+  };
+
+  spawnSpecialGuest = () => {
+    if (
+      this.specialGuestArr.length === 0 &&
+      this.framesCounter % 600 === 0 &&
+      this.framesCounter !== 0
+    ) {
+      let randomPositionY = Math.random() * (canvas.height - 300);
+      let newSpecialGuest = new SpecialGuest(randomPositionY);
+      this.specialGuestArr.push(newSpecialGuest);
+    }
+  };
+
+  playerSpecialGuestCollision = () => {
+    this.specialGuestArr.forEach((eachSpecialGuest) => {
+      // Check if the special guest  collision with player
+
+      if (
+        eachSpecialGuest.x < this.player.x + this.player.w * 0.8 &&
+        eachSpecialGuest.x + eachSpecialGuest.w * 0.8 > this.player.x &&
+        eachSpecialGuest.y < this.player.y + this.player.h / 2 &&
+        eachSpecialGuest.h / 2 + eachSpecialGuest.y > this.player.y
+      ) {
+        this.specialGuestArr.shift(eachSpecialGuest);
+        this.bonusCounter += 4;
+      }
+    });
+  };
+
+  // Game functions
 
   updateOxigen = () => {
     if (this.framesCounter % 90 === 0 && this.framesCounter !== 0) {
@@ -116,16 +155,20 @@ class Game {
   };
 
   updateScore = () => {
+    console.log("BONUS COUNTER: ", this.bonusCounter);
     if (this.framesCounter % 240 === 0 && this.framesCounter !== 0) {
-      this.score += 75;
-
-      scoreDOM.innerText = this.score;
-    } else if ( this.framesCounter === 0 ){
-        this.score = 0;
+      if (this.bonusCounter > 0) {
+        this.score += 150;
         scoreDOM.innerText = this.score;
+        this.bonusCounter--;
+      } else {
+        this.score += 75;
+        scoreDOM.innerText = this.score;
+      }
+    } else if (this.framesCounter === 0) {
+      this.score = 0;
+      scoreDOM.innerText = this.score;
     }
-
-
   };
 
   gameOver = () => {
@@ -149,12 +192,18 @@ class Game {
     this.oxigenArr.forEach((eachOxigen) => {
       eachOxigen.oxigenMovement();
     });
+
+    this.specialGuestArr.forEach((eachSpecialGuest) => {
+      eachSpecialGuest.specialGuestMovement();
+    });
+
+    // Player collision
     this.playerBlowfishCollision();
     this.playerOxigenCollision();
+    this.playerSpecialGuestCollision();
 
-    this.player.playerUpMovement()
-    this.player.playerDownMovement()
-
+    this.player.playerUpMovement();
+    this.player.playerDownMovement();
 
     //* Draw elements
     ctx.drawImage(this.bg, 0, 0, canvas.width, canvas.height);
@@ -167,7 +216,6 @@ class Game {
     this.blowFishArr.forEach((eachBlowfish) => {
       eachBlowfish.drawBlowfish();
     });
-    this.updateOxigen();
     this.removeBlowfishFromArray();
 
     // Oxigen Bottle
@@ -177,6 +225,14 @@ class Game {
     });
     this.removeOxigenFromArray();
 
+    // Special Guest
+    this.spawnSpecialGuest();
+    this.specialGuestArr.forEach((eachSpecialGuest) => {
+      eachSpecialGuest.drawSpecialGuest();
+    });
+    this.removeSpecialGuestFromArray();
+
+    this.updateOxigen();
     this.updateScore();
 
     this.framesCounter++;
