@@ -37,7 +37,7 @@ class Game {
   spawnBlowfish = () => {
     if (
       this.blowFishArr.length === 0 ||
-      this.blowFishArr[this.blowFishArr.length - 1].x < canvas.width * 0.5
+      this.blowFishArr[this.blowFishArr.length - 1].x < canvas.width * 0.45
     ) {
       let randomPositionY = Math.random() * (canvas.height - 300);
       let newBlowfish = new Blowfish(randomPositionY);
@@ -55,7 +55,7 @@ class Game {
         eachBlowfish.y < this.player.y + this.player.h / 2 &&
         eachBlowfish.h / 2 + eachBlowfish.y > this.player.y
       ) {
-        this.oxigen -= 15;
+        this.oxigen -= 20;
         oxigenDOM.innerText = this.oxigen;
         this.blowFishArr.shift(eachBlowfish);
       }

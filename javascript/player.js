@@ -9,7 +9,7 @@ class Player {
     this.w = 175; // Width
     this.h = 150; // height
 
-    this.speed = 10;
+    this.speed = 7;
 
     this.keyPressed = {
       upKey: false,
