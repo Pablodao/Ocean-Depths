@@ -78,8 +78,6 @@ const startGame = () => {
   gameAudio.load();
   gameAudio.play();
   gameAudio.loop = true;
-
-
 };
 
 const pauseGame = () => {
@@ -120,5 +118,11 @@ window.addEventListener("keyup", (event) => {
 window.addEventListener("keyup", (event) => {
   if (event.code === "KeyS" || event.code === "ArrowDown") {
     game.player.keyPressed.downKey = false;
+  }
+});
+
+window.addEventListener("keydown", (event) => {
+  if (event.code === "Escape") {
+    pauseGame()
   }
 });

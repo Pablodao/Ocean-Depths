@@ -248,6 +248,7 @@ class Game {
 
   gameLoop = () => {
     //* Clear canvas
+    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     //* Movement & actions
