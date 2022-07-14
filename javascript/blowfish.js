@@ -1,6 +1,5 @@
 class Blowfish {
   constructor(yParam) {
-    console.log("entrando en constructor de blowfish ")
     // Background image
     this.blowfishImage = new Image();
     this.blowfishImage.src = "./images/enemy.png";

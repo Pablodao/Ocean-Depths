@@ -12,8 +12,9 @@ class Game {
     this.blowFishArr = [];
     this.oxigenArr = [];
     this.specialGuestArr = [];
+    this.braveFishArr = [];
 
-    this.score = 1;
+    this.score = 0;
     this.oxigen = 100;
 
     this.bonusCounter = 0;
@@ -36,7 +37,7 @@ class Game {
   spawnBlowfish = () => {
     if (
       this.blowFishArr.length === 0 ||
-      this.blowFishArr[this.blowFishArr.length - 1].x < canvas.width * 0.6
+      this.blowFishArr[this.blowFishArr.length - 1].x < canvas.width * 0.5
     ) {
       let randomPositionY = Math.random() * (canvas.height - 300);
       let newBlowfish = new Blowfish(randomPositionY);
@@ -61,6 +62,65 @@ class Game {
     });
   };
 
+  // BraveFish
+
+  removeBraveFishFromArray = () => {
+    this.braveFishArr.forEach((eachBraveFish) => {
+      if (eachBraveFish.x + eachBraveFish.w < 0) {
+        this.braveFishArr.shift(eachBraveFish);
+      } else if (this.braveFishArr[0].x + this.braveFishArr[0].w < 0) {
+        this.braveFishArr.shift(eachBraveFish);
+      }
+    });
+  };
+
+  spawnBraveFish = () => {
+    if (
+      this.braveFishArr.length === 0 &&
+      this.framesCounter % 240 === 0 &&
+      this.framesCounter !== 0
+    ) {
+      let randomPositionY = Math.random() * (canvas.height - 300);
+      let newBraveFish = new BraveFish(randomPositionY);
+      this.braveFishArr.push(newBraveFish);
+    }
+  };
+
+  braveFishMovesToPlayer = () => {
+    this.braveFishArr.forEach((eachBraveFish) => {
+      if (eachBraveFish.y > this.player.y) {
+        eachBraveFish.y = eachBraveFish.y - 1.5
+        
+      } else if(eachBraveFish.y < this.player.y) {
+        eachBraveFish.y = eachBraveFish.y + 1.5
+        
+      } 
+    })
+    
+  }
+
+  playerBraveFishCollision = () => {
+    this.braveFishArr.forEach((eachBraveFish) => {
+      // Check if the brave Fish collides with player
+
+      if (
+        eachBraveFish.x < this.player.x + this.player.w * 0.8 &&
+        eachBraveFish.x + eachBraveFish.w * 0.8 > this.player.x &&
+        eachBraveFish.y < this.player.y + this.player.h / 2 &&
+        eachBraveFish.h / 2 + eachBraveFish.y > this.player.y
+      ) {
+        this.braveFishArr.shift(eachBraveFish);
+        this.bonusCounter = 0;
+        this.score -= 500;
+        scoreDOM.innerText = this.score;
+        this.oxigen -= 30;
+        oxigenDOM.innerText = this.oxigen;
+        
+      }
+    });
+  };
+
+
   // Oxygen Bottle
 
   removeOxigenFromArray = () => {
@@ -72,7 +132,7 @@ class Game {
   spawnOxigen = () => {
     if (
       this.oxigenArr.length === 0 ||
-      this.oxigenArr[this.oxigenArr.length - 1].x < canvas.width * 0.5
+      this.oxigenArr[this.oxigenArr.length - 1].x < canvas.width * 0.52
     ) {
       let randomPositionY = Math.random() * (canvas.height - 300);
       let newOxigen = new Oxigen(randomPositionY);
@@ -147,7 +207,7 @@ class Game {
   // Game functions
 
   updateOxigen = () => {
-    if (this.framesCounter % 90 === 0 && this.framesCounter !== 0) {
+    if (this.framesCounter % 60 === 0 && this.framesCounter !== 0) {
       this.oxigen -= 5;
 
       oxigenDOM.innerText = this.oxigen;
@@ -155,7 +215,6 @@ class Game {
   };
 
   updateScore = () => {
-    console.log("BONUS COUNTER: ", this.bonusCounter);
     if (this.framesCounter % 240 === 0 && this.framesCounter !== 0) {
       if (this.bonusCounter > 0) {
         this.score += 150;
@@ -172,7 +231,7 @@ class Game {
   };
 
   gameOver = () => {
-    if (this.oxigen <= 0) {
+    if (this.oxigen <= 0 || this.score < 0) {
       this.isGameOn = false;
       startScreenDOM.style.display = "none";
       gameOverScreenDOM.style.display = "flex";
@@ -189,6 +248,9 @@ class Game {
     this.blowFishArr.forEach((eachBlowfish) => {
       eachBlowfish.blowfishMovement();
     });
+    this.braveFishArr.forEach((eachBraveFish) => {
+      eachBraveFish.braveFishLeftMovement();
+    });
     this.oxigenArr.forEach((eachOxigen) => {
       eachOxigen.oxigenMovement();
     });
@@ -201,7 +263,9 @@ class Game {
     this.playerBlowfishCollision();
     this.playerOxigenCollision();
     this.playerSpecialGuestCollision();
+    this.playerBraveFishCollision()
 
+    // Player movemment
     this.player.playerUpMovement();
     this.player.playerDownMovement();
 
@@ -217,6 +281,14 @@ class Game {
       eachBlowfish.drawBlowfish();
     });
     this.removeBlowfishFromArray();
+
+    // BraveFish
+    this.spawnBraveFish();
+    this.braveFishMovesToPlayer();
+    this.braveFishArr.forEach((eachBraveFish) => {
+      eachBraveFish.drawBraveFish();
+    });
+    this.removeBraveFishFromArray();
 
     // Oxigen Bottle
     this.spawnOxigen();
