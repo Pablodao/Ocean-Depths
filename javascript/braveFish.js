@@ -2,7 +2,7 @@ class BraveFish {
   constructor(yParam, imgFacingDirection) {
     // Background image
     this.braveFishImage = new Image();
-    this.braveFishImage.src = "../images/braveFishRight.png";
+    this.braveFishImage.src = "./images/braveFishRight.png";
 
     this.x = canvas.width; // X-Axix
     this.y = yParam + 100; // Y-Axix
