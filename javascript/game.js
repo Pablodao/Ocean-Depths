@@ -58,6 +58,7 @@ class Game {
         this.oxigen -= 20;
         oxigenDOM.innerText = this.oxigen;
         this.blowFishArr.shift(eachBlowfish);
+        blowfishAudio.play()
       }
     });
   };
@@ -109,12 +110,14 @@ class Game {
         eachBraveFish.y < this.player.y + this.player.h / 2 &&
         eachBraveFish.h / 2 + eachBraveFish.y > this.player.y
       ) {
+        
         this.braveFishArr.shift(eachBraveFish);
         this.bonusCounter = 0;
         this.score -= 300;
         scoreDOM.innerText = this.score;
         this.oxigen -= 30;
         oxigenDOM.innerText = this.oxigen;
+        screamAudio.play();
         
       }
     });
@@ -155,10 +158,12 @@ class Game {
         this.oxigen += 15;
         oxigenDOM.innerText = this.oxigen;
         this.oxigenArr.shift(eachOxigen);
+        oxygenBottleAudio.play();
 
         if (this.oxigen >= 100) {
           this.oxigen = 100;
           oxigenDOM.innerText = this.oxigen;
+          oxygenBottleAudio.play();
         }
       }
     });
@@ -200,6 +205,7 @@ class Game {
       ) {
         this.specialGuestArr.shift(eachSpecialGuest);
         this.bonusCounter += 4;
+        specialGuestAudio.play();
       }
     });
   };
@@ -236,6 +242,7 @@ class Game {
       startScreenDOM.style.display = "none";
       gameOverScreenDOM.style.display = "flex";
       gameScreenDOM.style.display = "none";
+      gameAudio.pause();
     }
   };
 
