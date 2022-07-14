@@ -77,7 +77,7 @@ class Game {
   spawnBraveFish = () => {
     if (
       this.braveFishArr.length === 0 &&
-      this.framesCounter % 240 === 0 &&
+      this.framesCounter % 600 === 0 &&
       this.framesCounter !== 0
     ) {
       let randomPositionY = Math.random() * (canvas.height - 300);
@@ -111,7 +111,7 @@ class Game {
       ) {
         this.braveFishArr.shift(eachBraveFish);
         this.bonusCounter = 0;
-        this.score -= 500;
+        this.score -= 300;
         scoreDOM.innerText = this.score;
         this.oxigen -= 30;
         oxigenDOM.innerText = this.oxigen;
