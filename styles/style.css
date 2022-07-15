@@ -2,6 +2,8 @@ body {
   margin: 0;
 }
 
+/** Start screen **/
+
 #start-screen {
   display: flex;
   flex-direction: column;
@@ -26,40 +28,11 @@ body {
   top: 60%;
 }
 
-#game-over-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
-#game-over-screen img {
-  height: 100vh;
-  width: 100vw;
-}
-
-
-#restart-btn {
-  height: 100px;
-  width: 200px;
-  font-size: 24px;
-  color: white;
-  background-color: darkblue;
-  border: none;
-  border-radius: 7px;
-  position: absolute;
-  top: 45%;
-
-}
+/** Game screen **/
 
 #my-canvas {
   height: 100vh;
   width: 100vw;
-}
-
-#game-over-screen,
-#game-screen {
-  display: none;
 }
 
 #info-section {
@@ -67,7 +40,7 @@ body {
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 2%; 
+  top: 2%;
   left: 50%;
   right: 50%;
 }
@@ -99,7 +72,7 @@ body {
   order: 0;
 }
 
-#oxigen {
+#oxygen {
   height: 50px;
   width: 200px;
   padding: 10px;
@@ -113,4 +86,35 @@ body {
   align-items: center;
   justify-content: center;
   order: 2;
+}
+
+/** Game-Over screen **/
+
+#game-over-screen {
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+#game-over-screen img {
+  height: 100vh;
+  width: 100vw;
+}
+
+#restart-btn {
+  height: 100px;
+  width: 200px;
+  font-size: 24px;
+  color: white;
+  background-color: darkblue;
+  border: none;
+  border-radius: 7px;
+  position: absolute;
+  top: 45%;
+}
+
+/** Hide initial styles **/
+#game-over-screen,
+#game-screen {
+  display: none;
 }

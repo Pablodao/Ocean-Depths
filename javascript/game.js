@@ -1,30 +1,32 @@
 class Game {
   constructor() {
-    // Game properties
+    // * GAME PROPERTIES
 
-    // in-game background
+    // In-game background
     this.bg = new Image();
     this.bg.src = "./images/deep-sea-background.png";
 
-    //player
+    // Elements
     this.player = new Player();
-
     this.blowFishArr = [];
-    this.oxigenArr = [];
+    this.oxygenArr = [];
     this.specialGuestArr = [];
     this.braveFishArr = [];
 
+    // Score and Resource
     this.score = 0;
-    this.oxigen = 100;
+    this.oxygen = 100;
 
+    // Counters
     this.bonusCounter = 0;
     this.framesCounter = 0;
 
+    // Game status
     this.isGameOn = true;
     this.isGamePaused = false;
   }
 
-  // Game methods and functions
+  // * FUNCTIONS AND METHODS
 
   // Blowfish
 
@@ -47,7 +49,7 @@ class Game {
 
   playerBlowfishCollision = () => {
     this.blowFishArr.forEach((eachBlowfish) => {
-      // Check if each of the blowfish collision with player
+      // Check if each of the blowfish collides with player
 
       if (
         eachBlowfish.x < this.player.x + this.player.w * 0.8 &&
@@ -55,10 +57,10 @@ class Game {
         eachBlowfish.y < this.player.y + this.player.h / 2 &&
         eachBlowfish.h / 2 + eachBlowfish.y > this.player.y
       ) {
-        this.oxigen -= 20;
-        oxigenDOM.innerText = this.oxigen;
+        this.oxygen -= 20;
+        oxygenDOM.innerText = this.oxygen;
         this.blowFishArr.shift(eachBlowfish);
-        blowfishAudio.play()
+        blowfishAudio.play();
       }
     });
   };
@@ -90,15 +92,12 @@ class Game {
   braveFishMovesToPlayer = () => {
     this.braveFishArr.forEach((eachBraveFish) => {
       if (eachBraveFish.y > this.player.y) {
-        eachBraveFish.y = eachBraveFish.y - 1.5
-        
-      } else if(eachBraveFish.y < this.player.y) {
-        eachBraveFish.y = eachBraveFish.y + 1.5
-        
-      } 
-    })
-    
-  }
+        eachBraveFish.y = eachBraveFish.y - 1.5;
+      } else if (eachBraveFish.y < this.player.y) {
+        eachBraveFish.y = eachBraveFish.y + 1.5;
+      }
+    });
+  };
 
   playerBraveFishCollision = () => {
     this.braveFishArr.forEach((eachBraveFish) => {
@@ -110,59 +109,54 @@ class Game {
         eachBraveFish.y < this.player.y + this.player.h / 2 &&
         eachBraveFish.h / 2 + eachBraveFish.y > this.player.y
       ) {
-        
         this.braveFishArr.shift(eachBraveFish);
         this.bonusCounter = 0;
         this.score -= 300;
         scoreDOM.innerText = this.score;
-        this.oxigen -= 30;
-        oxigenDOM.innerText = this.oxigen;
+        this.oxygen -= 30;
+        oxygenDOM.innerText = this.oxygen;
         screamAudio.play();
-        
       }
     });
   };
 
-
   // Oxygen Bottle
 
-  removeOxigenFromArray = () => {
-    if (this.oxigenArr[0].x + this.oxigenArr[0].w < 0) {
-      this.oxigenArr.shift();
+  removeOxygenFromArray = () => {
+    if (this.oxygenArr[0].x + this.oxygenArr[0].w < 0) {
+      this.oxygenArr.shift();
     }
   };
 
-  spawnOxigen = () => {
+  spawnOxygen = () => {
     if (
-      this.oxigenArr.length === 0 ||
-      this.oxigenArr[this.oxigenArr.length - 1].x < canvas.width * 0.52
+      this.oxygenArr.length === 0 ||
+      this.oxygenArr[this.oxygenArr.length - 1].x < canvas.width * 0.52
     ) {
       let randomPositionY = Math.random() * (canvas.height - 300);
-      let newOxigen = new Oxigen(randomPositionY);
-      this.oxigenArr.push(newOxigen);
+      let newOxygen = new Oxygen(randomPositionY);
+      this.oxygenArr.push(newOxygen);
     }
   };
 
-  playerOxigenCollision = () => {
-    this.oxigenArr.forEach((eachOxigen) => {
-      // Check if each of the oxigen-bottle collision with player
-      // EachOxigen
-      // This.player
+  playerOxygenCollision = () => {
+    this.oxygenArr.forEach((eachOxygen) => {
+      // Check if each of the oxygen-bottles collides with player
 
       if (
-        eachOxigen.x < this.player.x + this.player.w * 0.8 &&
-        eachOxigen.x + eachOxigen.w * 0.8 > this.player.x &&
-        eachOxigen.y < this.player.y + this.player.h / 2 &&
-        eachOxigen.h / 2 + eachOxigen.y > this.player.y
+        eachOxygen.x < this.player.x + this.player.w * 0.8 &&
+        eachOxygen.x + eachOxygen.w * 0.8 > this.player.x &&
+        eachOxygen.y < this.player.y + this.player.h / 2 &&
+        eachOxygen.h / 2 + eachOxygen.y > this.player.y
       ) {
-        this.oxigen += 15;
-        oxigenDOM.innerText = this.oxigen;
-        this.oxigenArr.shift(eachOxigen);
+        this.oxygen += 15;
+        oxygenDOM.innerText = this.oxygen;
+        this.oxygenArr.shift(eachOxygen);
         oxygenBottleAudio.play();
 
-        if (this.oxigen >= 100) {
-          this.oxigen = 100;
-          oxigenDOM.innerText = this.oxigen;
+        if (this.oxygen >= 100) {
+          this.oxygen = 100;
+          oxygenDOM.innerText = this.oxygen;
           oxygenBottleAudio.play();
         }
       }
@@ -195,7 +189,7 @@ class Game {
 
   playerSpecialGuestCollision = () => {
     this.specialGuestArr.forEach((eachSpecialGuest) => {
-      // Check if the special guest  collision with player
+      // Check if the special guest collides with player
 
       if (
         eachSpecialGuest.x < this.player.x + this.player.w * 0.8 &&
@@ -212,15 +206,17 @@ class Game {
 
   // Game functions
 
-  updateOxigen = () => {
+  updateOxygen = () => {
+    // Update the oxygen value each second
     if (this.framesCounter % 60 === 0 && this.framesCounter !== 0) {
-      this.oxigen -= 5;
+      this.oxygen -= 5;
 
-      oxigenDOM.innerText = this.oxigen;
+      oxygenDOM.innerText = this.oxygen;
     }
   };
 
   updateScore = () => {
+    // Update the score value each 4 seconds
     if (this.framesCounter % 240 === 0 && this.framesCounter !== 0) {
       if (this.bonusCounter > 0) {
         this.score += 150;
@@ -237,7 +233,7 @@ class Game {
   };
 
   gameOver = () => {
-    if (this.oxigen <= 0 || this.score < 0) {
+    if (this.oxygen <= 0 || this.score < 0) {
       this.isGameOn = false;
       startScreenDOM.style.display = "none";
       gameOverScreenDOM.style.display = "flex";
@@ -247,8 +243,9 @@ class Game {
   };
 
   gameLoop = () => {
+
     //* Clear canvas
-    
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     //* Movement & actions
@@ -257,10 +254,10 @@ class Game {
       eachBlowfish.blowfishMovement();
     });
     this.braveFishArr.forEach((eachBraveFish) => {
-      eachBraveFish.braveFishLeftMovement();
+      eachBraveFish.braveFishMovement();
     });
-    this.oxigenArr.forEach((eachOxigen) => {
-      eachOxigen.oxigenMovement();
+    this.oxygenArr.forEach((eachOxygen) => {
+      eachOxygen.oxygenMovement();
     });
 
     this.specialGuestArr.forEach((eachSpecialGuest) => {
@@ -269,9 +266,9 @@ class Game {
 
     // Player collision
     this.playerBlowfishCollision();
-    this.playerOxigenCollision();
+    this.playerOxygenCollision();
     this.playerSpecialGuestCollision();
-    this.playerBraveFishCollision()
+    this.playerBraveFishCollision();
 
     // Player movemment
     this.player.playerUpMovement();
@@ -298,12 +295,12 @@ class Game {
     });
     this.removeBraveFishFromArray();
 
-    // Oxigen Bottle
-    this.spawnOxigen();
-    this.oxigenArr.forEach((eachOxigen) => {
-      eachOxigen.drawOxigen();
+    // Oxygen Bottle
+    this.spawnOxygen();
+    this.oxygenArr.forEach((eachOxygen) => {
+      eachOxygen.drawOxygen();
     });
-    this.removeOxigenFromArray();
+    this.removeOxygenFromArray();
 
     // Special Guest
     this.spawnSpecialGuest();
@@ -311,14 +308,14 @@ class Game {
       eachSpecialGuest.drawSpecialGuest();
     });
     this.removeSpecialGuestFromArray();
-
-    this.updateOxigen();
+    
+    this.updateOxygen();
     this.updateScore();
 
     this.framesCounter++;
     this.gameOver();
 
-    // Recursion effect
+    //* Recursion effect
     if (this.isGameOn === true && this.isGamePaused === false) {
       requestAnimationFrame(this.gameLoop);
     }
