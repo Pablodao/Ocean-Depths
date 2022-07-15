@@ -30,32 +30,32 @@ gameAudio.load();
 
 // BraveFish Collision
 const screamAudio = new Audio("./sounds/Scream.mp3");
-screamAudio.volume = 0.2;
+screamAudio.volume = 0.1;
 screamAudio.preload = "auto";
 screamAudio.load();
 
 // Blowfish Collision
 const blowfishAudio = new Audio("./sounds/blowfishCollisionSound.mp3");
-blowfishAudio.volume = 0.2;
+blowfishAudio.volume = 0.1;
 blowfishAudio.preload = "auto";
 blowfishAudio.load();
 
 // Splash
 const splashAudio = new Audio("./sounds/WaterSplash.mp3");
-splashAudio.volume = 0.2;
+splashAudio.volume = 0.1;
 splashAudio.preload = "auto";
 splashAudio.load();
 
 // Special Guest
 
 const specialGuestAudio = new Audio("./sounds/specialGuestSound.mp3");
-specialGuestAudio.volume = 0.2;
+specialGuestAudio.volume = 0.1;
 specialGuestAudio.preload = "auto";
 specialGuestAudio.load();
 
 // Oxygen bottle pick-up
 const oxygenBottleAudio = new Audio("./sounds/oxygenPickup.mp3");
-oxygenBottleAudio.volume = 0.2;
+oxygenBottleAudio.volume = 0.1;
 oxygenBottleAudio.preload = "auto";
 oxygenBottleAudio.load();
 
